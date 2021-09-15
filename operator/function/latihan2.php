@@ -21,11 +21,13 @@
 <?php
 
 if (isset($_POST['submit'])) {
-    function luasLingkaran($jari, $phi=3.14){
+    function luasLingkaran($jari, $phi = 3.14) 
+    {
         $luas = $jari * $phi * $jari;
         return $luas;
     }
-    function keliling($jari, $phi=3.14) {
+    function keliling($jari, $phi = 3.14)
+    {
         $keliling = ($jari * $phi) * 2;
         return $keliling;
     }
