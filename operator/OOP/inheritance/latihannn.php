@@ -1,67 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Latihan Inheritance</title>
-</head>
-<body>
-<form action="" method="post">
+<html>
+ <head><title>Tugas Inheritance</title></head>
+ <body>
+     <form action="" method="post">
         <fieldset>
+            <table>
                 <tr>
-                    <td>Jenis hamba </td>
-                    <td>:</td>
-                    <td><input type="number" name="jenis"></td>
-                </tr>
-                <tr>
-                    <td></td><td></td>
-                    <td><input type="submit" name="proses" value="Proses"></td>
-                </tr>
-        </fieldset>
-    </form>
-</body>
+            <td>Pilih Mahluk </td>
+            <td> : </td>
+            <td><select type="text" name="jenis" >
+            <option value= Manusia > Manusia</option>
+            <option value= Malaikat > Malaikat</option>
+            <option value= Jin > Jin</option>
+            <option value= Setan > Setan</option>
+            </select></td>
+            </tr>
+
+<tr>
+    <td></td><td></td>
+    <td>
+ <input type="submit" name="Input" value="Input"></td>
+</tr>
+ </table>
+</form>
+ </fieldset>
+ </body>
 </html>
-
 <?php
-if (isset($_POST['proses'])) {
+if (isset($_POST['Input'])) {
     $jenis = $_POST['jenis'];
-}
-class manusia
-{
-    public $jenis;
 
-    public function sifatManusia()
+    class jenisMahluk
     {
-        return "Beribadah kepada Tuhan";
-    }
-}
+        public function __construct($a)
+        {
+            $this->jenis = "$a";
 
-class malaikat extends manusia
-{
-    public function sifatMalaikat()
-    {
-        return "Beribadah kepada Tuhan";
-    }
-}
-class jin extends malaikat
-{
-    public function __construct()
-    {
-        parent::__construct();
-        echo "Ada yang taat beribadah <br />";
+        }
     }
 
-    public function __destruct()
+    class mahluk extends jenisMahluk
     {
-        echo "Ada yang sesat tugasnya seperti setan <br />";
-        parent::__destruct();
+        public function tugasMahluk()
+        {
+            if ($this->jenis == "Manusia") {
+                $tugas = "Beribadah Kepada Tuhan";
+            } elseif ($this->jenis == "Malaikat") {
+                $tugas = "Beribadah Kepada Tuhan";
+
+            } elseif ($this->jenis == "jin") {
+                $tugas = "Ada yang beribadah ada yang tidak";
+
+            } else {
+                $tugas = "menggangu manusia";
+
+            }
+
+            return $tugas;
+        }
     }
-}
-class setan extends jin
-{
-    public function sifatMalaikat()
-    {
-        return "Beribadah kepada Tuhan";
-    }
+
+    $mahluk = new mahluk($jenis);
+    echo "jenis mahluk :" . $mahluk->jenis . "<br>";
+    echo "sifat mahluk :" . $mahluk->tugasMahluk();
 }
