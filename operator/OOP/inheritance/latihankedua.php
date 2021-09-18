@@ -4,118 +4,121 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pembayaran Gofood</title>
+    <title>GoFood</title>
 </head>
 <body>
     <fieldset>
-        <table>
-            <form action="" method="post">
-                <legend>Pembayaran Gofood</legend>
+        <legend>GoFood</legend>
+         <form action="" method="post">
+            <table>
                 <tr>
-                    <td>Nama Barang </td>
+                    <td>Nama Barang</td>
                     <td> : </td>
-                    <td><input type="text" name="nama"></td>
+                    <td><input type="text" name="nama" id=""></td>
+
                 </tr>
                 <tr>
-                    <td>Harga Barang </td>
+                    <td>Harga</td>
                     <td> : </td>
-                    <td><input type="number" name="harga"></td>
+                    <td><input type="text" name="harga" id=""></td>
                 </tr>
                 <tr>
                     <td>Jumlah Pesanan</td>
                     <td> : </td>
-                    <td><input type="number" name="jumlah"></td>
+                    <td><input type="number" name="jumlah" id="" max=100 min=0></td>
                 </tr>
                 <tr>
                     <td>Jenis Pembayaran</td>
-                    <td> : </td>
-                    <td><select name="pembayaran" id="">
-                        <option value="cash">Cash</option>
-                        <option value="m-banking">M-Banking</option>
-                        <option value="gopay">Gopay</option>
-                        <option value="pickup">Pickup</option>
-                    </select></td>
+                    <td>:</td>
+                    <td><select name="jenis">
+                        <option value="Cash">Cash</option>
+                        <option value="Banking">M-Banking</option>
+                        <option value="Gopay">Gopay</option>
+                        <option value="Pickup">PickUp</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td></td><td></td>
-                    <td><input type="submit" name="submit" value="Simpan"></td>
+                    <td><input type="submit" name="submit" value="Simpan">
+                        <input type="reset" name="reset" value="Hapus"></td>
                 </tr>
-            </form>
-        </table>
-        <?php
+            </table>
+        </form>
+</fieldset>
+</body>
+</html>
+
+<?php
 if (isset($_POST['submit'])) {
     $nama = $_POST['nama'];
     $harga = $_POST['harga'];
     $jumlah = $_POST['jumlah'];
-    $pembayaran = $_POST['pembayaran'];
+    $jenis = $_POST['jenis'];
 
-    class gofud
+    class GoFood
     {
         public $nama;
         public $harga;
         public $jumlah;
-        public $pembayaran;
+        public $jenis;
 
-        public function __construct($a, $b, $c, $d)
+        public function __construct($nama, $harga, $jumlah, $jenis)
         {
-            $this->nama = $a;
-            $this->harga = $b;
-            $this->jumlah = $c;
-            $this->pembayaran = $d;
+            $this->nama = $nama;
+            $this->harga = $harga;
+            $this->jumlah = $jumlah;
+            $this->jenis = $jenis;
         }
     }
-    class pembayaran extends gofud
+
+    class Pembayaran extends Gofood
     {
-
-        public function bayar()
+        public function TotalBayar()
         {
-            $total = $this->harga * $this->jumlah;
+            $total = $this->jumlah * $this->harga;
 
-            if ($total >= 250000) {
-                $diskon = $total * (15 / 100);
-                $nilai = (15 / 100) * $total;
-                echo "Hasil Jumlah : " . $total . "<br>";
-                echo "Mendapatkan Diskon 15 % : $nilai<br>";
-
-            } else {
+            echo "<br> Keterangan <br>";
+            echo "Nama Barang : " . $this->nama . "<br>";
+            echo "Harga : " . $this->harga . "<br>";
+            echo "Jumlah Pesanan : " . $this->jumlah . "  <br>";
+            echo "Total Pembayaran :" . $total . "<br>";
+            if ($total >= 150000 && $total < 250000) {
                 $diskon = $total * 0.10;
-                $nilai = (10 / 100) * $total;
-                echo "Hasil Jumlah : " . $total . "<br>";
-                echo "Mendapatkan Diskon 10 %: $nilai<br>";
-
-            }
-
-            if ($this->pembayaran == "cash") {
                 $hasil = $total - $diskon;
-            } else if ($this->pembayaran == "m-banking") {
-                $jumlah = $total * (2.5 / 100);
-                $hasil = $total - $diskon - $jumlah;
-                $nilai = (2.5 / 100) * $total;
-                echo "Mendapatkan Diskon 2.5% : $nilai<br>";
-            } else if ($this->pembayaran == "gopay") {
-                $jumlah = $total * (10 / 100);
-                $hasil = $total - $diskon - $jumlah;
-                $nilai = (10 / 100) * $total;
-                echo "Mendapatkan Diskon 10 % : $nilai<br>";
-            } else {
-                $jumlah = $total * (1.5 / 100);
-                $hasil = $total - $diskon - $jumlah;
-                $nilai = (1.5 / 100) * $total;
-                echo "Mendapatkan Diskon 1.5 % : $nilai<br>";
+                echo "Diskon <br>";
+                echo "Anda mendapat diskon 10% <br>";
+                echo "Yang harus dibayar : $hasil<br>";
+            } else if ($total >= 250000) {
+                $diskon = $total * 0.15;
+                $hasil = $total - $diskon;
+                echo "Diskon <br>";
+                echo "Anda mendapat diskon 15% : " . $diskon;
+                echo "<br>Yang harus dibayar : $hasil<br>";
             }
-            return $hasil;
+            echo "Sistem pembayaran : " . $this->jenis . "<br>";
+
+            if ($this->jenis == "Cash") {
+                $hasil3 = $hasil;
+                echo "Anda Tidak Mendapatkan Diskon";
+            } else if ($this->jenis == "Banking") {
+                $hasil2 = (2.5 / 100) * $total;
+                $hasil3 = $total - $diskon - $hasil2;
+                echo "Mendapatkan diskon 2.5% : " . $hasil2;
+            } else if ($this->jenis == "Gopay") {
+                $hasil2 = (10 / 100) * $total;
+                $hasil3 = $total - $diskon - $hasil2;
+
+                echo "Mendapatkan Diskon 10% : " . $hasil2;
+            } else {
+                $hasil2 = (1.1 / 100) * $total;
+                $hasil3 = $total - $diskon - $hasil2;
+                echo "Mendapatkan Diskon 1.5% : " . $hasil2;
+            }
+            return "<br>Nominal : " . $hasil3;
+
         }
-
     }
+    $jajan = new pembayaran($nama, $harga, $jumlah, $jenis);
+    echo $jajan->TotalBayar();
 }
-
-$jadi = new pembayaran($nama, $harga, $jumlah, $pembayaran);
-echo "Nama : " . $jadi->nama . "<br>";
-echo "Harga : " . $jadi->harga . "<br>";
-echo "Jumlah Pesanan : " . $jadi->jumlah . "<br>";
-echo "Jenis Pembayaran : " . $jadi->pembayaran . "<br>";
-echo "Total Pembayaran : " . $jadi->bayar();
-?>
-    </fieldset>
-</body>
-</html>
